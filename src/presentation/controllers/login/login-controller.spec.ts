@@ -27,7 +27,7 @@ const makeValidation = (): Validation => {
   return new ValidationStub()
 }
 
-const makeAuthentcation = (): Authentication => {
+const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
     async auth (authentication: AuthenticationModel): Promise<string> {
       return 'any_token'
@@ -38,7 +38,7 @@ const makeAuthentcation = (): Authentication => {
 }
 
 const makeSut = (): SutTypes => {
-  const authenticationStub = makeAuthentcation()
+  const authenticationStub = makeAuthentication()
   const validationStub = makeValidation()
   const sut = new LoginController(authenticationStub, validationStub)
   return {
