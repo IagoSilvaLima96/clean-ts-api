@@ -10,7 +10,7 @@ import { makeLogControllerDecorator } from '../../decorators/log-controller-deco
 export const makeSignUpController = (): Controller => {
   const bcryptAdapter = new BcryptAdapter(12)
   const accountMongoRepository = new AccountMongoRepository()
-  const dbAddAccount = new DbAddAccount(bcryptAdapter, accountMongoRepository)
+  const dbAddAccount = new DbAddAccount(bcryptAdapter, accountMongoRepository, accountMongoRepository)
   const signUpController = new SignUpController(dbAddAccount, makeSignUpValidation(), makeDbAuthentication())
   return makeLogControllerDecorator(signUpController)
 }
