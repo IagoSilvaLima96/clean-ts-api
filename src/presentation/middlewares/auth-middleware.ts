@@ -8,7 +8,7 @@ export class AuthMiddleware implements Middleware {
     private readonly role?: string
   ) { }
 
-  async handle (httpRequest: HttpRequest): Promise<HttpResponse | null> {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const accessToken = httpRequest.headers?.['x-access-token']
       if (accessToken) {
