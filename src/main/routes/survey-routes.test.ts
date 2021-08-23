@@ -68,5 +68,34 @@ describe('Survey Routes', () => {
         })
         .expect(204)
     })
+
+    test('Should return 403 on add survey with if not admin user', async () => {
+      const { insertedId: id } = await accountCollection.insertOne({
+        name: 'Iago',
+        email: 'iagocrouchlima@live.com',
+        password: 'bnmk'
+      })
+      const accessToken = sign(id.toHexString(), env.jwtSecret)
+      await accountCollection.updateOne({
+        _id: id
+      }, {
+        $set: {
+          accessToken
+        }
+      })
+      await request(app)
+        .post('/api/surveys')
+        .set('x-access-token', accessToken)
+        .send({
+          question: 'Question',
+          answers: [{
+            answer: 'Answer 1',
+            image: 'http://image-name.com'
+          }, {
+            answer: 'Answer 1'
+          }]
+        })
+        .expect(403)
+    })
   })
 })
