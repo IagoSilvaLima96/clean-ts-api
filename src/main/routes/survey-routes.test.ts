@@ -5,9 +5,29 @@ import { Collection } from 'mongodb'
 import { sign } from 'jsonwebtoken'
 import env from '../config/env'
 
+let surveyCollection: Collection
+let accountCollection: Collection
+
+const makeAccessToken = async (): Promise<string> => {
+  const { insertedId: id } = await accountCollection.insertOne({
+    name: 'Iago',
+    email: 'iagocrouchlima@live.com',
+    role: 'admin',
+    password: 'bnmk'
+  })
+
+  const accessToken = sign(id.toHexString(), env.jwtSecret)
+  await accountCollection.updateOne({
+    _id: id
+  }, {
+    $set: {
+      accessToken
+    }
+  })
+  return accessToken
+}
+
 describe('Survey Routes', () => {
-  let surveyCollection: Collection
-  let accountCollection: Collection
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL as string)
   })
@@ -40,20 +60,7 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 204 on add survey with valid accessToken', async () => {
-      const { insertedId: id } = await accountCollection.insertOne({
-        name: 'Iago',
-        email: 'iagocrouchlima@live.com',
-        role: 'admin',
-        password: 'bnmk'
-      })
-      const accessToken = sign(id.toHexString(), env.jwtSecret)
-      await accountCollection.updateOne({
-        _id: id
-      }, {
-        $set: {
-          accessToken
-        }
-      })
+      const accessToken = await makeAccessToken()
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
@@ -108,20 +115,7 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 200 on load surveys with valid accessToken', async () => {
-      const { insertedId: id } = await accountCollection.insertOne({
-        name: 'Iago',
-        email: 'iagocrouchlima@live.com',
-        password: 'bnmk'
-      })
-      const accessToken = sign(id.toHexString(), env.jwtSecret)
-      await accountCollection.updateOne({
-        _id: id
-      }, {
-        $set: {
-          accessToken
-        }
-      })
-
+      const accessToken = await makeAccessToken()
       await surveyCollection.insertMany([{
         question: 'any_question',
         answers: [{
