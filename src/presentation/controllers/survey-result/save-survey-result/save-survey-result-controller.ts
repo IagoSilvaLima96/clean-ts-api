@@ -36,8 +36,8 @@ export class SaveSurveyResultController implements Controller {
         answer,
         date: new Date()
       }
-      await this.saveSurveyResult.save(saveSurveyResultModel)
-      return ok({})
+      const surveyResult = await this.saveSurveyResult.save(saveSurveyResultModel)
+      return ok(surveyResult)
     } catch (error) {
       return serverError(error)
     }
