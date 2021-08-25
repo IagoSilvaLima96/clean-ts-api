@@ -68,4 +68,21 @@ describe('Survey Mongo Repository', () => {
       expect(surveys.length).toBe(0)
     })
   })
+
+  describe('loadById()', () => {
+    test('Should return a survey on success', async () => {
+      const sut = makeSut()
+      const { insertedId: id } = await surveyCollection.insertOne({
+        question: 'any_question',
+        answers: [{
+          image: 'any_image',
+          answer: 'any_answer'
+        }],
+        date: new Date()
+      })
+      const survey = await sut.loadById(id.toHexString())
+      expect(survey).toBeTruthy()
+      expect(survey?.question).toBe('any_question')
+    })
+  })
 })
