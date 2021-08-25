@@ -25,5 +25,8 @@ export const MongoHelper = {
       ...dataWithoutId as T,
       id: _id.toHexString()
     }
+  },
+  mapList<T> (documents: any[]): T[] {
+    return documents.map(this.map)
   }
 }
