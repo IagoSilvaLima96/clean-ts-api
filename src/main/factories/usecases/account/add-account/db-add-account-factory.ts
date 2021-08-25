@@ -1,5 +1,5 @@
-import { AddAccount } from '@/domain/usecases/add-account'
-import { DbAddAccount } from '@/data/usecases/add-acount/db-add-acount'
+import { AddAccount } from '@/domain/usecases/account/add-account'
+import { DbAddAccount } from '@/data/usecases/account/add-acount/db-add-acount'
 import { BcryptAdapter } from '@/infra/criptography/bcrypt-adapter/bcrypt-adapter'
 import { AccountMongoRepository } from '@/infra/db/mongodb/account/account-mongo-repository'
 
