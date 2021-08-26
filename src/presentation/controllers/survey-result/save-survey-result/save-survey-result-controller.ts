@@ -5,7 +5,7 @@ import {
   LoadSurveyById,
   SurveyAnswerModel,
   SaveSurveyResult,
-  SaveSurveyResultModel
+  SaveSurveyResultParams
 } from './save-survey-result-controller-protocols'
 import { ok, badRequest, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
@@ -30,13 +30,13 @@ export class SaveSurveyResultController implements Controller {
       if (!this.answerExists(survey.answers, answer)) {
         return badRequest(new InvalidParamError('answer'))
       }
-      const saveSurveyResultModel: SaveSurveyResultModel = {
+      const saveSurveyResultParams: SaveSurveyResultParams = {
         surveyId,
         accountId: accountId as string,
         answer,
         date: new Date()
       }
-      const surveyResult = await this.saveSurveyResult.save(saveSurveyResultModel)
+      const surveyResult = await this.saveSurveyResult.save(saveSurveyResultParams)
       return ok(surveyResult)
     } catch (error) {
       return serverError(error)
