@@ -1,7 +1,8 @@
 import {
   loginPath,
   surveyPath,
-  signupPath
+  signupPath,
+  surveyResultPath
 } from './paths'
 import {
   accountSchema,
@@ -12,12 +13,14 @@ import {
   surveysSchema,
   apiKeyAuthSchema,
   signupParamsSchema,
-  addSurveyParamsSchema
+  addSurveyParamsSchema,
+  saveSurveyResultParamsSchema,
+  surveyResultSchema
 } from './schemas'
 import { badRequest, serverError, unauthorized, forbidden } from './components'
 
 export default {
-  openapi: '3.0.0',
+  openapi: '3.0.1',
   info: {
     title: 'Clean Node API',
     description: 'API para realizar enquetes entre programadores',
@@ -34,7 +37,8 @@ export default {
   paths: {
     '/login': loginPath,
     '/surveys': surveyPath,
-    '/signup': signupPath
+    '/signup': signupPath,
+    '/surveys/{surveyId}/results': surveyResultPath
   },
   schemas: {
     account: accountSchema,
@@ -44,7 +48,9 @@ export default {
     survey: surveySchema,
     surveyAnswer: surveyAnswerSchema,
     signupParams: signupParamsSchema,
-    addSurveyParams: addSurveyParamsSchema
+    addSurveyParams: addSurveyParamsSchema,
+    saveSurveyResultParams: saveSurveyResultParamsSchema,
+    surveyResult: surveyResultSchema
   },
   components: {
     securitySchemes: {
