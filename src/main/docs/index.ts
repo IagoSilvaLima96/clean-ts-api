@@ -1,23 +1,6 @@
-import {
-  loginPath,
-  surveyPath,
-  signupPath,
-  surveyResultPath
-} from './paths'
-import {
-  accountSchema,
-  loginParamsSchema,
-  errorSchema,
-  surveySchema,
-  surveyAnswerSchema,
-  surveysSchema,
-  apiKeyAuthSchema,
-  signupParamsSchema,
-  addSurveyParamsSchema,
-  saveSurveyResultParamsSchema,
-  surveyResultSchema
-} from './schemas'
-import { badRequest, serverError, unauthorized, forbidden } from './components'
+import { paths } from './paths'
+import { schemas } from './schemas'
+import { components } from './components'
 
 export default {
   openapi: '3.0.1',
@@ -34,31 +17,7 @@ export default {
   }, {
     name: 'Enquete'
   }],
-  paths: {
-    '/login': loginPath,
-    '/surveys': surveyPath,
-    '/signup': signupPath,
-    '/surveys/{surveyId}/results': surveyResultPath
-  },
-  schemas: {
-    account: accountSchema,
-    loginParams: loginParamsSchema,
-    error: errorSchema,
-    surveys: surveysSchema,
-    survey: surveySchema,
-    surveyAnswer: surveyAnswerSchema,
-    signupParams: signupParamsSchema,
-    addSurveyParams: addSurveyParamsSchema,
-    saveSurveyResultParams: saveSurveyResultParamsSchema,
-    surveyResult: surveyResultSchema
-  },
-  components: {
-    securitySchemes: {
-      apiKeyAuth: apiKeyAuthSchema
-    },
-    badRequest,
-    serverError,
-    unauthorized,
-    forbidden
-  }
+  paths,
+  schemas,
+  components
 }

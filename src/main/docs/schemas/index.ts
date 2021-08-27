@@ -1,11 +1,25 @@
-export * from './account-schema'
-export * from './error-schema'
-export * from './login-params-schema'
-export * from './survey-answer-schema'
-export * from './survey-schema'
-export * from './surveys-schema'
+import { accountSchema } from './account-schema'
+import { errorSchema } from './error-schema'
+import { loginParamsSchema } from './login-params-schema'
+import { surveyAnswerSchema } from './survey-answer-schema'
+import { surveySchema } from './survey-schema'
+import { surveysSchema } from './surveys-schema'
+import { signupParamsSchema } from './signup-params-schema'
+import { addSurveyParamsSchema } from './add-survey-params-schema'
+import { saveSurveyResultParamsSchema } from './save-survey-result-params-schema'
+import { surveyResultSchema } from './survey-result-schema'
+
 export * from './api-key-auth-schema'
-export * from './signup-params-schema'
-export * from './add-survey-params-schema'
-export * from './save-survey-result-params-schema'
-export * from './survey-result-schema'
+
+export const schemas = {
+  account: accountSchema,
+  loginParams: loginParamsSchema,
+  error: errorSchema,
+  surveys: surveysSchema,
+  survey: surveySchema,
+  surveyAnswer: surveyAnswerSchema,
+  signupParams: signupParamsSchema,
+  addSurveyParams: addSurveyParamsSchema,
+  saveSurveyResultParams: saveSurveyResultParamsSchema,
+  surveyResult: surveyResultSchema
+}
