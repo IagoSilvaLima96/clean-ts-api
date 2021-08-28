@@ -56,7 +56,6 @@ describe('SurveyResult Mongo Repository', () => {
       expect(surveyResult.answers[0].answer).toBe('other_answer')
       expect(surveyResult.answers[0].count).toBe(1)
       expect(surveyResult.answers[0].percent).toBe(100)
-      expect(surveyResult.answers[1].answer).toBe('any_answer')
       expect(surveyResult.answers[1].count).toBe(0)
       expect(surveyResult.answers[1].percent).toBe(0)
     })
@@ -83,9 +82,52 @@ describe('SurveyResult Mongo Repository', () => {
       expect(surveyResult.answers[0].answer).toBe('any_answer')
       expect(surveyResult.answers[0].count).toBe(1)
       expect(surveyResult.answers[0].percent).toBe(100)
-      expect(surveyResult.answers[1].answer).toBe('other_answer')
       expect(surveyResult.answers[1].count).toBe(0)
       expect(surveyResult.answers[1].percent).toBe(0)
+    })
+  })
+
+  describe('loadSurveyById', () => {
+    test('Should load survey result correctly', async () => {
+      const addSurveyParams = mockAddSurveyParams()
+      const sut = makeSut()
+      const accountId = await makeAccountId()
+      const surveyId = await makeSurveyId()
+      await surveyResultCollection.insertMany([{
+        surveyId: new ObjectId(surveyId),
+        accountId: new ObjectId(accountId),
+        answer: addSurveyParams.answers[0].answer,
+        date: new Date()
+      },
+      {
+        surveyId: new ObjectId(surveyId),
+        accountId: new ObjectId(accountId),
+        answer: addSurveyParams.answers[1].answer,
+        date: new Date()
+      },
+      {
+        surveyId: new ObjectId(surveyId),
+        accountId: new ObjectId(accountId),
+        answer: addSurveyParams.answers[1].answer,
+        date: new Date()
+      }, {
+        surveyId: new ObjectId(surveyId),
+        accountId: new ObjectId(accountId),
+        answer: addSurveyParams.answers[2].answer,
+        date: new Date()
+      }])
+      const surveyResult = await sut.loadBySurveyId(surveyId)
+      expect(surveyResult).toBeTruthy()
+      expect(surveyResult.surveyId).toEqual(surveyId)
+      expect(surveyResult.answers[0].answer).toBe(addSurveyParams.answers[1].answer)
+      expect(surveyResult.answers[0].count).toBe(2)
+      expect(surveyResult.answers[0].percent).toBe(50)
+      expect(surveyResult.answers[1].count).toBe(1)
+      expect(surveyResult.answers[1].percent).toBe(25)
+      expect(surveyResult.answers[2].count).toBe(1)
+      expect(surveyResult.answers[2].percent).toBe(25)
+      expect(surveyResult.answers[3].count).toBe(0)
+      expect(surveyResult.answers[3].percent).toBe(0)
     })
   })
 })
