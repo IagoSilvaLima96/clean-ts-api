@@ -1,12 +1,12 @@
 import { LoadSurveyResultController } from './load-survey-result-controller'
 import {
   HttpRequest,
-  mockLoadSurveyById,
-  LoadSurveyById
+  LoadSurveyById,
+  LoadSurveyResult
 } from './load-survey-result-controller-protocols'
 import { badRequest, serverError } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
-import { throwError } from '@/domain/test'
+import { throwError, mockLoadSurveyById, mockLoadSurveyResult } from '@/domain/test'
 
 const mockRequest = (): HttpRequest => ({
   params: {
@@ -17,19 +17,22 @@ const mockRequest = (): HttpRequest => ({
 type SutTypes = {
   sut: LoadSurveyResultController
   loadSurveyByIdStub: LoadSurveyById
+  loadSurveyResultStub: LoadSurveyResult
 }
 
 const makeSut = (): SutTypes => {
   const loadSurveyByIdStub = mockLoadSurveyById()
-  const sut = new LoadSurveyResultController(loadSurveyByIdStub)
+  const loadSurveyResultStub = mockLoadSurveyResult()
+  const sut = new LoadSurveyResultController(loadSurveyByIdStub, loadSurveyResultStub)
   return {
     sut,
-    loadSurveyByIdStub
+    loadSurveyByIdStub,
+    loadSurveyResultStub
   }
 }
 
 describe('LoadSurveyResult Controller', () => {
-  test('Should call LoadSurveyById with correct Id', async () => {
+  test('Should call LoadSurveyById with correct surveyId', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById')
     const httpRequest = mockRequest()
@@ -51,5 +54,13 @@ describe('LoadSurveyResult Controller', () => {
     const httpRequest = mockRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should call LoadSurveyResult with correct surveyId', async () => {
+    const { sut, loadSurveyResultStub } = makeSut()
+    const loadSpy = jest.spyOn(loadSurveyResultStub, 'load')
+    const httpRequest = mockRequest()
+    await sut.handle(httpRequest)
+    expect(loadSpy).toHaveBeenCalledWith(httpRequest.params.surveyId)
   })
 })
