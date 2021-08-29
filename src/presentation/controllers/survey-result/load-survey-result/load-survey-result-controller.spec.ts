@@ -4,9 +4,14 @@ import {
   LoadSurveyById,
   LoadSurveyResult
 } from './load-survey-result-controller-protocols'
-import { badRequest, serverError } from '@/presentation/helpers/http/http-helper'
+import { badRequest, serverError, ok } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/errors'
-import { throwError, mockLoadSurveyById, mockLoadSurveyResult } from '@/domain/test'
+import {
+  throwError,
+  mockLoadSurveyById,
+  mockLoadSurveyResult,
+  mockSurveyResultModel
+} from '@/domain/test'
 
 const mockRequest = (): HttpRequest => ({
   params: {
@@ -70,5 +75,11 @@ describe('LoadSurveyResult Controller', () => {
     const httpRequest = mockRequest()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return 200 on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(mockRequest())
+    expect(httpResponse).toEqual(ok(mockSurveyResultModel()))
   })
 })
