@@ -22,14 +22,14 @@ export const mockSurveyModels = (): SurveyModel[] => [{
 }]
 
 export const mockSurveyModel = (): SurveyModel => ({
-  id: 'other_id',
-  question: 'other_question',
+  id: 'any_id',
+  question: 'any_question',
   answers: [{
-    image: 'other_image',
-    answer: 'other_answer'
-  }, {
     image: 'any_image',
     answer: 'any_answer'
+  }, {
+    image: 'other_image',
+    answer: 'other_answer'
   }],
   date: new Date()
 })

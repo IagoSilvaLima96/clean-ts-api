@@ -2,7 +2,8 @@ import {
   LoadSurveyResult,
   SurveyResultModel,
   LoadSurveyResultRepository,
-  LoadSurveyByIdRepository
+  LoadSurveyByIdRepository,
+  SurveyModel
 } from './db-load-survey-result-protocols'
 
 export class DbLoadSurveyResult implements LoadSurveyResult {
@@ -14,8 +15,19 @@ export class DbLoadSurveyResult implements LoadSurveyResult {
   async load (surveyId: string): Promise<SurveyResultModel> {
     const surveyResult = await this.loadSurveyResultRepository.loadBySurveyId(surveyId)
     if (!surveyResult) {
-      await this.loadSurveyIdRepository.loadById(surveyId)
+      const { question, date, answers } = (await this.loadSurveyIdRepository.loadById(surveyId)) as SurveyModel
+      return {
+        surveyId,
+        question,
+        date,
+        answers: answers.map(item => ({
+          count: 0,
+          percent: 0,
+          answer: item.answer,
+          image: item.image
+        }))
+      }
     }
-    return surveyResult as SurveyResultModel
+    return surveyResult
   }
 }
