@@ -89,5 +89,14 @@ describe('SurveyResult Routes', () => {
         .get('/api/surveys/any_id/results')
         .expect(403)
     })
+
+    test('Should return 200 on load survey result with accessToken', async () => {
+      const surveyId = await makeSurveyId()
+      const accessToken = await makeAccessToken()
+      await request(app)
+        .get(`/api/surveys/${surveyId}/results`)
+        .set('x-access-token', accessToken)
+        .expect(200)
+    })
   })
 })
