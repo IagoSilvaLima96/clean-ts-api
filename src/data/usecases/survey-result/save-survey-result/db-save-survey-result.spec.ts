@@ -3,7 +3,7 @@ import { SaveSurveyResultRepository } from './db-save-survey-result-protocols'
 import { throwError, mockSaveSurveyResultParams, mockSurveyResultModel } from '@/domain/test'
 import { mockSaveSurveyResultRepository, mockLoadSurveyResultRepository } from '@/data/test'
 import MockDate from 'mockdate'
-import { LoadSurveyResultRepository } from '../load-survey-result.ts/db-load-survey-result-protocols'
+import { LoadSurveyResultRepository } from '../load-survey-result/db-load-survey-result-protocols'
 
 type SutTypes = {
   sut: DbSaveSurveyResult
