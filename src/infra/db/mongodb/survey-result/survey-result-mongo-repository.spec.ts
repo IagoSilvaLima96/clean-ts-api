@@ -126,5 +126,12 @@ describe('SurveyResult Mongo Repository', () => {
       expect(surveyResult?.answers[3].count).toBe(0)
       expect(surveyResult?.answers[3].percent).toBe(0)
     })
+
+    test('Should return null if there is no survey result', async () => {
+      const sut = makeSut()
+      const surveyId = await makeSurveyId()
+      const surveyResult = await sut.loadBySurveyId(surveyId)
+      expect(surveyResult).toBeFalsy()
+    })
   })
 })
