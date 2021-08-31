@@ -7,12 +7,12 @@ let surveyCollection: Collection
 let accountCollection: Collection
 let surveyResultCollection: Collection
 
-const makeAccountId = async (): Promise<string> => {
+const mockAccountId = async (): Promise<string> => {
   const { insertedId: id } = await accountCollection.insertOne(mockAddAccountParams())
   return id.toHexString()
 }
 
-const makeSurveyId = async (): Promise<string> => {
+const mockSurveyId = async (): Promise<string> => {
   const { insertedId: id } = await surveyCollection.insertOne(mockAddSurveyParams())
   return id.toHexString()
 }
@@ -42,8 +42,8 @@ describe('SurveyResult Mongo Repository', () => {
   describe('save()', () => {
     test('Should insert a survey result if its new', async () => {
       const sut = makeSut()
-      const accountId = await makeAccountId()
-      const surveyId = await makeSurveyId()
+      const accountId = await mockAccountId()
+      const surveyId = await mockSurveyId()
       const answer = 'other_answer'
       await sut.save({
         surveyId,
@@ -60,8 +60,8 @@ describe('SurveyResult Mongo Repository', () => {
 
     test('Should update a survey result if its not new', async () => {
       const sut = makeSut()
-      const accountId = await makeAccountId()
-      const surveyId = await makeSurveyId()
+      const accountId = await mockAccountId()
+      const surveyId = await mockSurveyId()
       const answer = 'other_answer'
       await surveyResultCollection.insertOne({
         surveyId: new ObjectId(surveyId),
@@ -88,8 +88,8 @@ describe('SurveyResult Mongo Repository', () => {
     test('Should load survey result correctly', async () => {
       const addSurveyParams = mockAddSurveyParams()
       const sut = makeSut()
-      const accountId = await makeAccountId()
-      const surveyId = await makeSurveyId()
+      const accountId = await mockAccountId()
+      const surveyId = await mockSurveyId()
       await surveyResultCollection.insertMany([{
         surveyId: new ObjectId(surveyId),
         accountId: new ObjectId(accountId),
@@ -129,7 +129,7 @@ describe('SurveyResult Mongo Repository', () => {
 
     test('Should return null if there is no survey result', async () => {
       const sut = makeSut()
-      const surveyId = await makeSurveyId()
+      const surveyId = await mockSurveyId()
       const surveyResult = await sut.loadBySurveyId(surveyId)
       expect(surveyResult).toBeFalsy()
     })
