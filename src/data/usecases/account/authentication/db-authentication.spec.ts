@@ -2,7 +2,8 @@ import {
   LoadAccountByEmailRepository,
   HashComparer,
   Encrypter,
-  UpdateAccessTokenRepository
+  UpdateAccessTokenRepository,
+  AuthenticationModel
 } from './db-authentication-protocols'
 import { DbAuthentication } from './db-authentication'
 import { throwError, mockAuthenticationParams } from '@/domain/test'
@@ -60,8 +61,8 @@ describe('DbAuthentication UseCase', () => {
   test('Should return null if LoadAccountByEmailRepository returns null', async () => {
     const { sut, loadAccountByEmailRepositoryStub } = makeSut()
     jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(Promise.resolve(null))
-    const accessToken = await sut.auth(mockAuthenticationParams())
-    expect(accessToken).toBeNull()
+    const authenticationModel = await sut.auth(mockAuthenticationParams())
+    expect(authenticationModel).toBeNull()
   })
 
   test('Should call HashComparer with correct values', async () => {
@@ -81,8 +82,8 @@ describe('DbAuthentication UseCase', () => {
   test('Should return null if HashComparer returns false', async () => {
     const { sut, hashComparerStub } = makeSut()
     jest.spyOn(hashComparerStub, 'compare').mockReturnValueOnce(Promise.resolve(false))
-    const accessToken = await sut.auth(mockAuthenticationParams())
-    expect(accessToken).toBeNull()
+    const authenticationModel = await sut.auth(mockAuthenticationParams())
+    expect(authenticationModel).toBeNull()
   })
 
   test('Should call Encrypter with correct id', async () => {
@@ -99,10 +100,11 @@ describe('DbAuthentication UseCase', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  test('Should return a token on success', async () => {
+  test('Should return an authenticationModel  on success', async () => {
     const { sut } = makeSut()
-    const accessToken = await sut.auth(mockAuthenticationParams())
+    const { accessToken, name } = (await sut.auth(mockAuthenticationParams())) as AuthenticationModel
     expect(accessToken).toBe('any_token')
+    expect(name).toBe('any_name')
   })
 
   test('Should call UpdateAccessTokenRepository with correct values', async () => {
