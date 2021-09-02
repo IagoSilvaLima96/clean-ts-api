@@ -1,7 +1,4 @@
-import { Hasher } from '@/data/protocols/criptography/hasher'
-import { Decrypter } from '@/data/protocols/criptography/decrypter'
-import { Encrypter } from '@/data/protocols/criptography/encrypter'
-import { HashComparer } from '@/data/protocols/criptography/hash-comparer'
+import { Hasher, Decrypter, Encrypter, HashComparer } from '@/data/protocols'
 export const mockHasher = (): Hasher => {
   class HasherStub implements Hasher {
     async hash (value: string): Promise<string> {

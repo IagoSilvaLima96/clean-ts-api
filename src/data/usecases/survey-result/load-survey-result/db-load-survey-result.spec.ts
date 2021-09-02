@@ -1,13 +1,7 @@
 import { DbLoadSurveyResult } from './db-load-survey-result'
-import {
-  LoadSurveyResultRepository,
-  LoadSurveyByIdRepository,
-  mockLoadSurveyResultRepository,
-  mockLoadSurveyByIdRepository,
-  throwError,
-  mockSurveyResultModel,
-  mockEmptySurveyResultModel
-} from './db-load-survey-result-protocols'
+import { LoadSurveyResultRepository, LoadSurveyByIdRepository } from '@/data/protocols'
+import { throwError, mockSurveyResultModel, mockEmptySurveyResultModel } from '@/domain/test'
+import { mockLoadSurveyByIdRepository, mockLoadSurveyResultRepository } from '@/data/test'
 import MockDate from 'mockdate'
 
 type SutTypes = {

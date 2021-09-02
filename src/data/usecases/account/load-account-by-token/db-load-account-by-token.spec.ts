@@ -1,8 +1,5 @@
-import {
-  Decrypter,
-  LoadAccountByTokenRepository
-} from './db-load-account-by-token-protocols'
 import { DbLoadAccountByToken } from './db-load-account-by-token'
+import { LoadAccountByTokenRepository, Decrypter } from '@/data/protocols'
 import { throwError, mockAccountModel } from '@/domain/test'
 import { mockDecrypter, mockLoadAccountByTokenRepository } from '@/data/test'
 

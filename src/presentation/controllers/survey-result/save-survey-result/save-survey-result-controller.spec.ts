@@ -1,11 +1,8 @@
 import { SaveSurveyResultController } from './save-survey-result-controller'
-import {
-  LoadSurveyById,
-  HttpRequest,
-  SaveSurveyResult
-} from './save-survey-result-controller-protocols'
-import { badRequest, serverError, ok } from '@/presentation/helpers/http/http-helper'
+import { HttpRequest } from '@/presentation/protocols'
+import { badRequest, serverError, ok } from '@/presentation/helpers'
 import { InvalidParamError } from '@/presentation/errors'
+import { LoadSurveyById, SaveSurveyResult } from '@/domain/usecases'
 import { throwError, mockLoadSurveyById, mockSaveSurveyResult, mockSurveyResultModel } from '@/domain/test'
 import MockDate from 'mockdate'
 

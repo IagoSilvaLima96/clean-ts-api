@@ -1,6 +1,6 @@
 
 import { AccountMongoRepository } from './account-mongo-repository'
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '@/infra/db'
 import { mockAddAccountParams } from '@/domain/test'
 import { Collection } from 'mongodb'
 describe('Account Mongo Repository', () => {

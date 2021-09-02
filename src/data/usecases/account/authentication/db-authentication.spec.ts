@@ -1,18 +1,8 @@
-import {
-  LoadAccountByEmailRepository,
-  HashComparer,
-  Encrypter,
-  UpdateAccessTokenRepository,
-  AuthenticationModel
-} from './db-authentication-protocols'
 import { DbAuthentication } from './db-authentication'
-import { throwError, mockAuthenticationParams } from '@/domain/test'
-import {
-  mockEncrypter,
-  mockHashComparer,
-  mockLoadAccountByEmailRepository,
-  mockUpdateAccessTokenRepository
-} from '@/data/test'
+import { AuthenticationModel } from '@/domain/models'
+import { LoadAccountByEmailRepository, UpdateAccessTokenRepository, HashComparer, Encrypter } from '@/data/protocols'
+import { mockAuthenticationParams, throwError } from '@/domain/test'
+import { mockLoadAccountByEmailRepository, mockUpdateAccessTokenRepository, mockHashComparer, mockEncrypter } from '@/data/test'
 
 type SutTypes = {
   sut: DbAuthentication

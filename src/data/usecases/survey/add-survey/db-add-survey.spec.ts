@@ -1,7 +1,7 @@
 import { DbAddSurvey } from './db-add-survey'
-import { AddSurveyRepository } from './db-add-survey-protocols'
 import { throwError, mockAddSurveyParams } from '@/domain/test'
 import { mockAddSurveyRepository } from '@/data/test'
+import { AddSurveyRepository } from '@/data/protocols'
 
 type SutTypes = {
   sut: DbAddSurvey

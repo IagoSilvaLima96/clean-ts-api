@@ -1,5 +1,5 @@
-import { LoadSurveysRepository } from './db-load-surveys-protocols'
 import { DbLoadSurveys } from './db-load-surveys'
+import { LoadSurveysRepository } from '@/data/protocols'
 import { throwError, mockSurveyModels } from '@/domain/test'
 import { mockLoadSurveysRepository } from '@/data/test'
 import MockDate from 'mockdate'

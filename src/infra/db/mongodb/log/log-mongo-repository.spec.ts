@@ -1,5 +1,5 @@
 import { LogMongoRepository } from './log-mongo-repository'
-import { MongoHelper } from '@/infra/db/mongodb/helpers/mongo-helper'
+import { MongoHelper } from '@/infra/db'
 import { Collection } from 'mongodb'
 
 const makeSut = (): LogMongoRepository => {

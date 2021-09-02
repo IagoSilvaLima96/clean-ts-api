@@ -3,7 +3,7 @@ import {
   Hasher,
   AddAccountRepository,
   LoadAccountByEmailRepository
-} from './db-add-account-protocols'
+} from '@/data/protocols'
 import { mockAccountModel, mockAddAccountParams, throwError } from '@/domain/test'
 import { mockHasher, mockAddAccountRepository, mockLoadAccountByEmailRepository } from '@/data/test'
 
